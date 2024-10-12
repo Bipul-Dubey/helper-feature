@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, IconButton, TextareaAutosize } from '@mui/material';
+import { Box, IconButton, Skeleton, TextareaAutosize } from '@mui/material';
 import { Copy } from 'phosphor-react';
 import Swal from 'sweetalert2';
 
@@ -64,24 +64,28 @@ const TypingEffectTextarea = ({
 
   return (
     <Box sx={{ position: 'relative', width: '100%', maxHeight: '500px' }}>
-      <TextareaAutosize
-        ref={textareaRef}
-        value={displayText}
-        minRows={5}
-        style={{
-          width: '100%',
-          maxHeight: '500px',
-          padding: '16px',
-          borderRadius: '4px',
-          border: '1px solid #ccc',
-          fontSize: '16px',
-          resize: 'none',
-          outline: 'none',
-          overflowY: 'scroll',
-          boxSizing: 'border-box',
-        }}
-      />
-      {!isTyping && (
+      {displayText ? (
+        <TextareaAutosize
+          ref={textareaRef}
+          value={displayText}
+          minRows={5}
+          style={{
+            width: '100%',
+            maxHeight: '500px',
+            padding: '16px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+            fontSize: '16px',
+            resize: 'none',
+            outline: 'none',
+            overflowY: 'scroll',
+            boxSizing: 'border-box',
+          }}
+        />
+      ) : (
+        <Skeleton variant="text" height={'300px'} width={'100%'} />
+      )}
+      {!isTyping && displayText && (
         <IconButton
           onClick={handleCopy}
           sx={{

@@ -1,4 +1,4 @@
-const DETAILED_FILE_TYPES = {
+export const DETAILED_FILE_TYPES = {
   image: {
     category: 'image',
     list: [

@@ -1,5 +1,6 @@
 export const PATHS = {
   TOOLS: {
-    ImageToBase64: '/tools/image-to-base64',
+    FilesToBase64: '/tools/files-to-base64',
+    Base64ToImage: '/tools/base64-to-image',
   },
 };

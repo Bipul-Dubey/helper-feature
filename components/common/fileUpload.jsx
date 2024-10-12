@@ -37,10 +37,16 @@ const FileUpload = ({ allowedTypes = ['*'], onFileUpload }) => {
 
       setTimeout(() => {
         setLoading(false);
+        const fileSizeInKB = (file.size / 1024).toFixed(2); // Convert size to KB
+        const fileSizeInMB = (file.size / (1024 * 1024)).toFixed(2); // Convert size to MB
+
         const fileData = {
           url: URL.createObjectURL(file),
           name: file.name,
-          size: file.size,
+          size: {
+            kb: `${fileSizeInKB} KB`,
+            mb: `${fileSizeInMB} MB`,
+          },
           type: file.type,
         };
         setFileDetails(fileData);

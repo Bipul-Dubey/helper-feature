@@ -1,8 +1,9 @@
+import FileViewer from '@/components/common/FileRenderer';
 import FileUpload from '@/components/common/fileUpload';
 import HeadingSubheading from '@/components/common/HeadingSubheading';
 import Page from '@/components/common/Page';
 import TypingEffectTextarea from '@/components/tool-component/TextAreaCopy';
-import { ALLOWED_FILE_TYPE } from '@/constant/fileTypes';
+import { DETAILED_FILE_TYPES } from '@/constant/fileTypes';
 import { convertImageToBase64 } from '@/utilities/images';
 import {
   Box,
@@ -15,6 +16,13 @@ import {
 import { ArrowRight, Trash } from 'phosphor-react';
 import React, { useState } from 'react';
 
+const FILE_TYPE_ALLOWED = [
+  ...DETAILED_FILE_TYPES.audio.list,
+  ...DETAILED_FILE_TYPES.image.list,
+  ...DETAILED_FILE_TYPES.video.list,
+  DETAILED_FILE_TYPES.document.documents.PDF,
+];
+
 export default function ImageToBase64() {
   const [fileDetails, setFileDetails] = useState(null);
   const [file, setFile] = useState(null);
@@ -24,16 +32,15 @@ export default function ImageToBase64() {
   const onFileUpload = (details, file) => {
     setFileDetails(details);
     setFile(file);
-  };
 
-  const onDeleteFile = () => {
-    setFileDetails(null);
-    setFile(null);
+    if (details?.size?.mb?.split(' ')?.at(0) > 10) {
+      setConvertError(
+        'File size is to large it takes time to convert, or may be hang!!'
+      );
+    }
   };
 
   const onConvertToBase64 = async () => {
-    console.log('file : ', file);
-
     if (!file) {
       setConvertError('Please provide file');
       return;
@@ -68,8 +75,8 @@ export default function ImageToBase64() {
         }}
       >
         <HeadingSubheading
-          title="Convert Image Files to Base64 Encoding"
-          subtitle="Easily transform your image files into Base64 encoded strings for safe data transmission and storage"
+          title="Convert Files to Base64 Encoding"
+          subtitle="Easily transform your files into Base64 encoded strings for safe data transmission and storage"
         />
         <Card
           sx={{
@@ -82,41 +89,37 @@ export default function ImageToBase64() {
           {!convertData && !fileDetails && (
             <FileUpload
               onFileUpload={onFileUpload}
-              allowedTypes={ALLOWED_FILE_TYPE.image}
+              allowedTypes={FILE_TYPE_ALLOWED}
             />
           )}
-          {fileDetails && fileDetails.type.startsWith('image/') && (
+          {fileDetails && (
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
-                position: 'relative', // Set position relative
               }}
             >
-              <IconButton
-                sx={{
-                  position: 'absolute',
-                  top: '50%', // Center vertically
-                  left: '50%', // Center horizontally
-                  transform: 'translate(-50%, -50%)', // Adjust to truly center the button
-                  backgroundColor: '#fff',
-                }}
-                onClick={onDeleteFile}
+              <FileViewer file={file} />
+              <Stack
+                flexDirection={'row'}
+                justifyContent={'space-between'}
+                alignItems={'center'}
               >
-                <Trash size={50} color="#000" />
-              </IconButton>
-
-              <Box
-                component="img"
-                src={fileDetails.url}
-                alt="Selected file"
-                sx={{
-                  borderRadius: 1,
-                  maxHeight: '450px',
-                  maxWidth: '450px',
-                }}
-              />
+                <Stack flexDirection={'row'} gap={1} color={'#6d6d6d'}>
+                  <Typography>{fileDetails.name}</Typography>|
+                  <Typography>{fileDetails.type?.split('/').at(1)}</Typography>|
+                  <Typography>{fileDetails.size.kb}</Typography>
+                </Stack>
+                <IconButton
+                  sx={{
+                    backgroundColor: '#fff',
+                  }}
+                  onClick={handleReset}
+                >
+                  <Trash size={24} color="#000" />
+                </IconButton>
+              </Stack>
 
               <Button
                 variant="contained"
@@ -127,12 +130,13 @@ export default function ImageToBase64() {
               </Button>
 
               {convertError && (
-                <Typography variant="h6" color="warning" align="center">
+                <Typography variant="body1" color="warning" align="center">
                   {convertError}
                 </Typography>
               )}
             </Box>
           )}
+
           {!convertError && convertData && (
             <Stack gap={2}>
               <TypingEffectTextarea
