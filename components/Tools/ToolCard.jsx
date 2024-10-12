@@ -1,7 +1,9 @@
-import { Box, Grid, IconButton, Paper, Stack, Typography } from '@mui/material';
+import { Grid, Paper, Stack, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import React, { useId } from 'react';
 
-export default function ToolCard({ tool }) {
+export default function ToolCard({ tool, navigation = false }) {
+  const router = useRouter();
   const { title, subtitle, path, imageUrl } = tool;
 
   return (
@@ -26,6 +28,12 @@ export default function ToolCard({ tool }) {
           gap: 3,
           justifyContent: 'flex-start',
           alignItems: 'flex-start',
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          router.push({
+            pathname: path,
+          });
         }}
       >
         <img

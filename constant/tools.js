@@ -1,11 +1,20 @@
+import { PATHS } from './paths';
+
+const CATEGORY = {
+  From_image: 'From Image',
+  To_image: 'To Image',
+};
+
 export const TOOL_List = [
   {
+    category: CATEGORY.From_image,
     title: 'Image to Base64',
     subtitle: 'Convert images to base64 encoding',
-    path: '',
+    path: PATHS.TOOLS.ImageToBase64,
     imageUrl: '/tool-images/image_base64.jpg',
   },
   {
+    category: CATEGORY.To_image,
     title: 'Base64 to Image',
     subtitle: 'Convert base64 encoding to images',
     path: '',

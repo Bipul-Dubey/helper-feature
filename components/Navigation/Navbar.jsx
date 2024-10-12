@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { AppBar, Stack, Toolbar, Typography } from '@mui/material';
 import { NAVIGATIONS } from '@/constant/navigations';
+import ToolNavigation from './ToolNavigation';
+import NavigationButton from './NavigationButton';
 
 export default function Navbar() {
   return (
@@ -26,11 +28,13 @@ export default function Navbar() {
             },
           }}
         >
-          {NAVIGATIONS?.map((navigation) => (
-            <Stack>
-              <Typography variant="h6">{navigation.name}</Typography>
-            </Stack>
-          ))}
+          {NAVIGATIONS?.map((navigation) =>
+            navigation.is_dropdown ? (
+              <ToolNavigation key={useId()} navigation={navigation} />
+            ) : (
+              <NavigationButton key={useId()} navigation={navigation} />
+            )
+          )}
         </Stack>
       </Toolbar>
     </AppBar>
