@@ -1,28 +1,35 @@
 import { PATHS } from './paths';
 
 const CATEGORY = {
-  To_base64: 'To base64',
-  To_image: 'To Image',
+  Base64: 'Base64 en/de-coding',
+  Other: 'Other',
 };
 
 export const TOOL_List = [
   {
-    category: CATEGORY.To_base64,
+    category: CATEGORY.Base64,
     title: 'To Base64 encoded',
     subtitle: 'Convert files to base64 encoding',
     path: PATHS.TOOLS.FilesToBase64,
-    imageUrl: '/tool-images/image_base64.jpg',
+    imageUrl: '/tool-images/to_base64.webp',
   },
   {
-    category: CATEGORY.To_image,
-    title: 'Base64 to Image',
-    subtitle: 'Convert base64 encoding to images',
-    path: PATHS.TOOLS.Base64ToImage,
-    imageUrl: '/tool-images/base64_image.webp',
+    category: CATEGORY.Base64,
+    title: 'From Base64 decode',
+    subtitle: 'Convert base64 encoding to files',
+    path: PATHS.TOOLS.Base64ToFiles,
+    imageUrl: '/tool-images/from_base64.webp',
   },
 ];
 
 export const UP_COMING = [
+  {
+    category: CATEGORY.Other,
+    title: 'URL Shortner',
+    subtitle: 'Convert your long url in short',
+    path: PATHS.TOOLS.URL_SHORTNER,
+    imageUrl: '/tool-images/url_shortner.webp',
+  },
   {
     title: 'Text Formatter',
     subtitle:

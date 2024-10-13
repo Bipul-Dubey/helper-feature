@@ -4,9 +4,11 @@ import { Copy } from 'phosphor-react';
 import Swal from 'sweetalert2';
 
 const TypingEffectTextarea = ({
-  originalText = 'This is the text that appears as if it is being typed...',
+  originalText = '',
   timeDelay = 10,
-  typingEffect = true, // New prop to enable/disable typing effect
+  typingEffect = true,
+  readOnly = false,
+  onChange = () => {},
 }) => {
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(typingEffect); // Initialize with typingEffect
@@ -64,27 +66,28 @@ const TypingEffectTextarea = ({
 
   return (
     <Box sx={{ position: 'relative', width: '100%', maxHeight: '500px' }}>
-      {displayText ? (
-        <TextareaAutosize
-          ref={textareaRef}
-          value={displayText}
-          minRows={5}
-          style={{
-            width: '100%',
-            maxHeight: '500px',
-            padding: '16px',
-            borderRadius: '4px',
-            border: '1px solid #ccc',
-            fontSize: '16px',
-            resize: 'none',
-            outline: 'none',
-            overflowY: 'scroll',
-            boxSizing: 'border-box',
-          }}
-        />
-      ) : (
-        <Skeleton variant="text" height={'300px'} width={'100%'} />
-      )}
+      <TextareaAutosize
+        ref={textareaRef}
+        value={displayText}
+        onChange={(e) => {
+          if (readOnly) return;
+          onChange(e.target.value);
+          setDisplayText(e.target.value);
+        }}
+        minRows={5}
+        style={{
+          width: '100%',
+          maxHeight: '500px',
+          padding: '16px',
+          borderRadius: '4px',
+          border: '1px solid #ccc',
+          fontSize: '16px',
+          resize: 'none',
+          outline: 'none',
+          overflowY: 'scroll',
+          boxSizing: 'border-box',
+        }}
+      />
       {!isTyping && displayText && (
         <IconButton
           onClick={handleCopy}

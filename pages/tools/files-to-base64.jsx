@@ -1,10 +1,10 @@
-import FileViewer from '@/components/common/FileRenderer';
+import FileViewer from '@/components/Tools/FileRenderer';
 import FileUpload from '@/components/common/fileUpload';
 import HeadingSubheading from '@/components/common/HeadingSubheading';
 import Page from '@/components/common/Page';
 import TypingEffectTextarea from '@/components/tool-component/TextAreaCopy';
 import { DETAILED_FILE_TYPES } from '@/constant/fileTypes';
-import { convertImageToBase64 } from '@/utilities/images';
+import { convertImageToBase64, formatFileName } from '@/utilities/files_utils';
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import {
 import { ArrowRight, Trash } from 'phosphor-react';
 import React, { useState } from 'react';
 
-const FILE_TYPE_ALLOWED = [
+export const FILE_TYPE_ALLOWED = [
   ...DETAILED_FILE_TYPES.audio.list,
   ...DETAILED_FILE_TYPES.image.list,
   ...DETAILED_FILE_TYPES.video.list,
@@ -98,6 +98,7 @@ export default function ImageToBase64() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
+                alignItems: 'center',
               }}
             >
               <FileViewer file={file} />
@@ -105,9 +106,10 @@ export default function ImageToBase64() {
                 flexDirection={'row'}
                 justifyContent={'space-between'}
                 alignItems={'center'}
+                width={'100%'}
               >
                 <Stack flexDirection={'row'} gap={1} color={'#6d6d6d'}>
-                  <Typography>{fileDetails.name}</Typography>|
+                  <Typography>{formatFileName(fileDetails.name)}</Typography>|
                   <Typography>{fileDetails.type?.split('/').at(1)}</Typography>|
                   <Typography>{fileDetails.size.kb}</Typography>
                 </Stack>
@@ -122,6 +124,9 @@ export default function ImageToBase64() {
               </Stack>
 
               <Button
+                sx={{
+                  width: '100%',
+                }}
                 variant="contained"
                 endIcon={<ArrowRight size={28} />}
                 onClick={onConvertToBase64}
@@ -143,6 +148,7 @@ export default function ImageToBase64() {
                 originalText={convertData}
                 timeDelay={1}
                 typingEffect={false}
+                readOnly={true}
               />
               <Box
                 sx={{
