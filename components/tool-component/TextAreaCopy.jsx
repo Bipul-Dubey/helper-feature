@@ -67,6 +67,7 @@ const TypingEffectTextarea = ({
   return (
     <Box sx={{ position: 'relative', width: '100%', maxHeight: '500px' }}>
       <TextareaAutosize
+        placeholder="Your text here..."
         ref={textareaRef}
         value={displayText}
         onChange={(e) => {
