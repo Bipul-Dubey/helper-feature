@@ -98,13 +98,16 @@ export default function ToolNavigation({ navigation }) {
     setIsOpen(false);
   };
 
+  const handleToggle = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <Stack
       flexDirection="row"
       gap={0.7}
       alignItems="center"
-      onClick={handleClose}
-      onMouseEnter={handleOpen}
+      onClick={handleToggle}
       ref={ref}
       sx={{ position: 'relative', color: isOpen ? "#FFD700'" : '' }}
     >
