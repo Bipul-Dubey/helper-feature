@@ -72,6 +72,7 @@ export default function ImageToBase64() {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
+          px: 2,
         }}
       >
         <HeadingSubheading
