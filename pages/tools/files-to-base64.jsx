@@ -21,6 +21,7 @@ export const FILE_TYPE_ALLOWED = [
   ...DETAILED_FILE_TYPES.image.list,
   ...DETAILED_FILE_TYPES.video.list,
   DETAILED_FILE_TYPES.document.documents.PDF,
+  DETAILED_FILE_TYPES.document.documents.TXT,
 ];
 
 export default function ImageToBase64() {
