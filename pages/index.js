@@ -2,7 +2,7 @@ import HeadingSubheading from '@/components/common/HeadingSubheading';
 import Page from '@/components/common/Page';
 import ToolCard from '@/components/Tools/ToolCard';
 import { TOOL_List } from '@/constant/tools';
-import { Container, Grid, Stack, Typography } from '@mui/material';
+import { Container, Grid, Stack } from '@mui/material';
 
 export default function Home() {
   return (
