@@ -78,6 +78,10 @@ const FileUpload = ({ allowedTypes = ['*'], onFileUpload }) => {
         '&:hover': {
           backgroundColor: '#f9f9f9',
         },
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
       onClick={() => document.getElementById('file-upload').click()}
       onDrop={handleFileDrop}
@@ -110,7 +114,10 @@ const FileUpload = ({ allowedTypes = ['*'], onFileUpload }) => {
             wordBreak: 'break-word',
           }}
         >
-          {fileDetails.name} ({(fileDetails.size / 1024).toFixed(2)} KB)
+          {fileDetails.name}
+          {fileDetails.size &&
+            !isNaN(fileDetails.size) &&
+            `(${(fileDetails.size / 1024).toFixed(2)} KB)`}
         </Typography>
       )}
 

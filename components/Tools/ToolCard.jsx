@@ -1,4 +1,4 @@
-import { Grid, Paper, Stack, Typography } from '@mui/material';
+import { Grid2, Paper, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useId } from 'react';
 
@@ -7,11 +7,11 @@ export default function ToolCard({ tool, navigation = false }) {
   const { title, subtitle, path, imageUrl } = tool;
 
   return (
-    <Grid item xs={12} sm={6} md={4} key={useId()}>
+    <Grid2 item size={4} key={useId()}>
       <Paper
         elevation={3}
         sx={{
-          padding: '16px',
+          padding: '7px 15px',
           height: '100%',
           border: '1px solid #cdcdcd',
           borderRadius: '4px',
@@ -51,6 +51,6 @@ export default function ToolCard({ tool, navigation = false }) {
           <Typography variant="body2">{subtitle}</Typography>
         </Stack>
       </Paper>
-    </Grid>
+    </Grid2>
   );
 }

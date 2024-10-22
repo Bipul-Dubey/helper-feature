@@ -1,84 +1,83 @@
 import React, { useRef, useState } from 'react';
-import { Stack, Container, Menu, Grid, Paper, Typography } from '@mui/material';
+import {
+  Stack,
+  Container,
+  Menu,
+  Paper,
+  Typography,
+  Grid2,
+} from '@mui/material';
 import NavigationButton from './NavigationButton';
 import { CaretDown } from 'phosphor-react';
 import { TOOL_List } from '@/constant/tools';
 import { Box } from '@mui/material';
-import { groupToolsByCategory } from '@/utilities/generals';
 import { useRouter } from 'next/router';
 
 function ToolNavigationContainer() {
   const router = useRouter();
-  const tool_list = groupToolsByCategory(TOOL_List);
 
   return (
-    <Container maxWidth="md" sx={{ mt: 2 }}>
-      <Grid container spacing={2}>
-        {tool_list.map((category, index) => (
-          <Grid item xs={12} sm={6} key={index}>
-            <Typography variant="h6" sx={{ mb: 1 }}>
-              {category.category}
-            </Typography>
-            <Grid container spacing={1}>
-              {category.tools.map((tool, toolIndex) => (
-                <Grid item xs={12} key={toolIndex}>
-                  <Paper
-                    elevation={1}
-                    sx={{
-                      padding: 1.5,
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: 1.5,
-                      transition: '0.2s',
-                      '&:hover': {
-                        boxShadow: 3,
-                      },
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => {
-                      router.push({
-                        pathname: tool.path,
-                      });
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={tool.image}
-                      alt={tool.title}
-                      sx={{
-                        width: 35,
-                        height: 35,
-                        objectFit: 'cover',
-                        borderRadius: 1,
-                      }}
-                    />
-                    <Box>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{ fontSize: 14, lineHeight: 1.2 }}
-                      >
-                        {tool.title}
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        color="textSecondary"
-                        sx={{ fontSize: 12, lineHeight: 1.1 }}
-                      >
-                        {tool.subtitle}
-                      </Typography>
-                    </Box>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
+    <Container maxWidth="md">
+      <Grid2 container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        {TOOL_List.map((tool, index) => (
+          <Grid2 size={4}>
+            <Paper
+              key={index}
+              elevation={1}
+              sx={{
+                flexBasis: 'calc(33.3333% - 12px)', // Each item takes 1/3rd of the width minus spacing
+                padding: 1.5,
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 1.5,
+                transition: '0.2s',
+                '&:hover': {
+                  boxShadow: 3,
+                },
+                cursor: 'pointer',
+                mb: 1.5, // margin-bottom for vertical spacing between rows
+              }}
+              onClick={() => {
+                router.push({
+                  pathname: tool.path,
+                });
+              }}
+            >
+              <Box
+                component="img"
+                src={tool.imageUrl}
+                alt={tool.title}
+                sx={{
+                  width: 35,
+                  height: 35,
+                  objectFit: 'cover',
+                  borderRadius: 1,
+                }}
+              />
+              <Box ml={1}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontSize: 14, lineHeight: 1.2 }}
+                >
+                  {tool.title}
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  color="textSecondary"
+                  sx={{ fontSize: 12, lineHeight: 1.1 }}
+                >
+                  {tool.subtitle}
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid2>
         ))}
-      </Grid>
+      </Grid2>
     </Container>
   );
 }
 
-const MenuComponent = ({ anchorEl, open, handleClose }) => {
+const MenuComponent = ({ anchorEl, open }) => {
   return (
     <Menu open={open} anchorEl={anchorEl}>
       <ToolNavigationContainer />
@@ -89,10 +88,6 @@ const MenuComponent = ({ anchorEl, open, handleClose }) => {
 export default function ToolNavigation({ navigation }) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
 
   const handleClose = () => {
     setIsOpen(false);

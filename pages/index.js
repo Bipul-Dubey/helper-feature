@@ -2,7 +2,7 @@ import HeadingSubheading from '@/components/common/HeadingSubheading';
 import Page from '@/components/common/Page';
 import ToolCard from '@/components/Tools/ToolCard';
 import { TOOL_List } from '@/constant/tools';
-import { Container, Grid, Stack } from '@mui/material';
+import { Container, Grid, Grid2, Stack } from '@mui/material';
 
 export default function Home() {
   return (
@@ -20,11 +20,15 @@ export default function Home() {
         managing, we've got you covered with fast and free solutions.`}
         />
         <Container maxWidth="lg">
-          <Grid container spacing={2}>
+          <Grid2
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
             {TOOL_List.map((tool, index) => (
               <ToolCard tool={tool} />
             ))}
-          </Grid>
+          </Grid2>
         </Container>
       </Stack>
     </Page>
